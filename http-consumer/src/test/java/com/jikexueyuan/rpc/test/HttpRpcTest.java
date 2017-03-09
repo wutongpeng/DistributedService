@@ -34,18 +34,28 @@ public class HttpRpcTest
 
     @Test
     public void test() throws InterruptedException {
+        int count = 10000;
         //开始的倒数锁
-        final CountDownLatch countDownLatch=new CountDownLatch(10000);
+        final CountDownLatch countDownLatch=new CountDownLatch(count);
         //10名选手
         final ExecutorService exec= Executors.newFixedThreadPool(50);
         Date date = new Date();
-        for(int index=0; index<10000;index++){
+        for(int index=0; index<count;index++){
             final int NO=index + 1;//Cannot refer to a non-final variable NO inside an inner class defined in a different method
             Runnable run=new Runnable(){
                 public void run()
                 {
-                    logger.info(peopleController.getSpeak(new Random(100).nextInt(),new Random(1).nextInt()));
-                    countDownLatch.countDown();
+                    try {
+                       String result = peopleController.getSpeak(new Random(100).nextInt(20), new Random(1).nextInt(1));
+                        System.out.println(result);
+                    }catch (Exception e)
+                    {
+                        logger.warn("出现异常",e);
+                    }
+                    finally {
+                        countDownLatch.countDown();
+                    }
+
                 }
             };
             exec.submit(run);

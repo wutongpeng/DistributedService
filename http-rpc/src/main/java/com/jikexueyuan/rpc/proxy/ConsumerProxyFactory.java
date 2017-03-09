@@ -1,5 +1,6 @@
 package com.jikexueyuan.rpc.proxy;
 
+import com.jikexueyuan.rpc.exception.RpcException;
 import com.jikexueyuan.rpc.invoke.ConsumerConfig;
 import com.jikexueyuan.rpc.invoke.HttpInvoker;
 import com.jikexueyuan.rpc.invoke.Invoker;
@@ -7,6 +8,8 @@ import com.jikexueyuan.rpc.serialize.Formater;
 import com.jikexueyuan.rpc.serialize.Parser;
 import com.jikexueyuan.rpc.serialize.json.JsonFormater;
 import com.jikexueyuan.rpc.serialize.json.JsonParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -30,14 +33,27 @@ public class ConsumerProxyFactory implements InvocationHandler
     public Object create() throws Exception
     {
         Class interfaceClass = Class.forName(clazz);
-        return Proxy.newProxyInstance(interfaceClass.getClassLoader(),new Class[]{interfaceClass},this);
+        return Proxy.newProxyInstance(interfaceClass.getClassLoader(), new Class[]{interfaceClass}, this);
     }
 
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable
     {
         Class interfaceClass = proxy.getClass().getInterfaces()[0];
         String req = formater.reqFormat(interfaceClass,method.getName(),args[0]);
-        String resb = invoker.request(req,consumerConfig);
+        String resb = null;
+        int times = 0;
+        while (times++ < 2 && resb == null)
+        {
+            try {
+                resb = invoker.request(req,consumerConfig.getUrl(interfaceClass));
+            }catch (RpcException e)
+            {
+            }
+        }
+        if (resb == null)
+        {
+            invoker.request(req,consumerConfig.getUrl(interfaceClass));
+        }
         return parser.rsbParse(resb);
     }
 

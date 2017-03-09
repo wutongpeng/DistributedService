@@ -4,8 +4,11 @@ import com.jikexueyuan.rpc.exception.RpcException;
 import com.jikexueyuan.rpc.exception.RpcExceptionCodeEnum;
 import org.apache.http.*;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.config.ConnectionConfig;
+import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.conn.routing.HttpRoute;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
@@ -20,6 +23,7 @@ import org.apache.http.util.EntityUtils;
 import java.io.*;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.net.ConnectException;
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.ArrayList;
@@ -34,8 +38,8 @@ public class HttpInvoker implements Invoker
 
     public static final Invoker invoker = new HttpInvoker();
 
-    public String request(String request, ConsumerConfig consumerConfig) throws RpcException {
-        HttpPost post = new HttpPost(consumerConfig.getUrl());
+    public String request(String request, String url) throws RpcException {
+        HttpPost post = new HttpPost(url);
         post.setHeader("Connection", "Keep-Alive");
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("data", request));
@@ -53,7 +57,6 @@ public class HttpInvoker implements Invoker
         {
             throw new RpcException("http 调用异常",e, RpcExceptionCodeEnum.INVOKE_REQUEST_ERROR.getCode(),request);
         }
-
     }
 
     public void response(String response, OutputStream outputStream) throws RpcException
@@ -75,9 +78,11 @@ public class HttpInvoker implements Invoker
         // 指定专门的route，设置最大连接数为80
         HttpHost localhost = new HttpHost("localhost", 8080);
         cm.setMaxPerRoute(new HttpRoute(localhost), 50);
+        RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(60000).setConnectTimeout(500).build();//设置请求和传输超时时间
         // 创建httpClient
          return HttpClients.custom()
                 .setConnectionManager(cm)
+                 .setDefaultRequestConfig(requestConfig)
                  .build();
 
     }
