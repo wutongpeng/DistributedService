@@ -26,7 +26,7 @@ public class ZookeeperClient
     {
         zkClient = new ZkClient(url);
     }
-    //´´½¨³Ö¾Ã»¯Ä¿Â¼
+    //åˆ›å»ºæŒä¹…åŒ–ç›®å½•
     public void createPersistent(String path)
     {
         try {
@@ -34,7 +34,7 @@ public class ZookeeperClient
         } catch (ZkNodeExistsException e) {
         }
     }
-    //´´½¨ÁÙÊ±Ä¿Â¼
+    //åˆ›å»ºä¸´æ—¶ç›®å½•
     public void createEphemeral(String path,String data)
     {
         try {
@@ -42,7 +42,7 @@ public class ZookeeperClient
         } catch (ZkNodeExistsException e) {
         }
     }
-    //´´½¨ÁÙÊ±Ä¿Â¼
+    //åˆ›å»ºä¸´æ—¶ç›®å½•
     public void deleteEphemeral(String path)
     {
         try {
@@ -50,7 +50,7 @@ public class ZookeeperClient
         } catch (ZkNodeExistsException e) {
         }
     }
-    //»ñÈ¡×ÓÄ¿Â¼
+    //è·å–å­ç›®å½•
     public  List<String> getChildren(String path) throws RpcException {
         try {
             List<String> pathList = zkClient.getChildren(path);
@@ -63,7 +63,7 @@ public class ZookeeperClient
         }
         throw new RpcException(RpcExceptionCodeEnum.NO_PROVIDERS.getCode(),path);
     }
-    //»ñÈ¡½ÚµãÖĞµÄÖµ
+    //è·å–èŠ‚ç‚¹ä¸­çš„å€¼
     public <T> T getData(String path)
     {
         try {

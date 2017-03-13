@@ -5,10 +5,10 @@ package com.jikexueyuan.rpc.exception;
  */
 public enum RpcExceptionCodeEnum
 {
-    DATA_PARSER_ERROR("DATA_PARSER_ERROR","数据转换异常"),
-    NO_BEAN_FOUND("NO_BEAN_FOUND","没有找到bean对象"),
-    INVOKE_REQUEST_ERROR("INVOKE_REQUEST_ERROR","RPC请求异常"),
-    NO_PROVIDERS("NO_PROVIDERS","没有服务提供"),
+    DATA_PARSER_ERROR("DATA_PARSER_ERROR","鏁版嵁杞崲寮傚父"),
+    NO_BEAN_FOUND("NO_BEAN_FOUND","娌℃湁鎵惧埌bean瀵硅薄"),
+    INVOKE_REQUEST_ERROR("INVOKE_REQUEST_ERROR","RPC璇锋眰寮傚父"),
+    NO_PROVIDERS("NO_PROVIDERS","娌℃湁鏈嶅姟鎻愪緵"),
     ;
 
     private String code;

@@ -12,18 +12,18 @@ import java.io.OutputStream;
 public interface Invoker
 {
     /**
-     * µ÷ÓÃÇëÇó
-     * @param request ÇëÇó±¨ÎÄ
-     * @param url Ïû·ÑÕßÅäÖÃ
+     * è°ƒç”¨è¯·æ±‚
+     * @param request è¯·æ±‚æŠ¥æ–‡
+     * @param url æ¶ˆè´¹è€…é…ç½®
      * @return
      * @throws RpcException
      */
     String request(String request,String url) throws RpcException;
 
     /**
-     * ÇëÇóÓ¦´ğ
-     * @param response ÏìÓ¦±¨ÎÄ
-     * @param outputStream Êä³öÁ÷
+     * è¯·æ±‚åº”ç­”
+     * @param response å“åº”æŠ¥æ–‡
+     * @param outputStream è¾“å‡ºæµ
      * @throws RpcException
      */
     void response(String response,OutputStream outputStream) throws RpcException;

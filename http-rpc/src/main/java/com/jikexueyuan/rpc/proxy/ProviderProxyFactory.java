@@ -73,7 +73,7 @@ public class ProviderProxyFactory extends AbstractHandler
         if (config != null){
             config.register(clazz);
         }
-        logger.info("{} ÒÑ¾­·¢²¼", clazz.getSimpleName());
+        logger.info("{} å·²ç»å‘å¸ƒ", clazz.getSimpleName());
     }
 
 
@@ -82,11 +82,11 @@ public class ProviderProxyFactory extends AbstractHandler
         String reqStr = request.getParameter("data");
         try
         {
-            //½«ÇëÇó²ÎÊı½âÎö
+            //å°†è¯·æ±‚å‚æ•°è§£æ
             Request rpcRequest = parser.reqParse(reqStr);
-            //·´ÉäÇëÇó
+            //åå°„è¯·æ±‚
             Object result = rpcRequest.invoke(ProviderProxyFactory.getInstance().getBeanByClass(rpcRequest.getClazz()));
-            //ÏàÓ¦ÇëÇó
+            //ç›¸åº”è¯·æ±‚
             invoker.response(formater.rsbFormat(result),response.getOutputStream());
         }
         catch (RpcException e)
