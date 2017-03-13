@@ -9,7 +9,7 @@ public interface Parser
 {
     /**
      *
-     * @param param ÇëÇó²ÎÊı
+     * @param param è¯·æ±‚å‚æ•°
      * @return
      */
     Request reqParse(String param) throws RpcException;

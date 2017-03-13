@@ -7,16 +7,16 @@ public interface Formater
 {
     /**
      *
-     * @param clazz ÇëÇóµÄ½Ó¿Ú
-     * @param method ÇëÇóµÄ·½·¨
-     * @param param ÇëÇóµÄ²ÎÊı
+     * @param clazz è¯·æ±‚çš„æ¥å£
+     * @param method è¯·æ±‚çš„æ–¹æ³•
+     * @param param è¯·æ±‚çš„å‚æ•°
      * @return
      */
     String reqFormat(Class clazz,String method,Object param);
 
     /**
      *
-     * @param param ÏìÓ¦µÄ½á¹û
+     * @param param å“åº”çš„ç»“æœ
      * @return
      */
     String rsbFormat(Object param);

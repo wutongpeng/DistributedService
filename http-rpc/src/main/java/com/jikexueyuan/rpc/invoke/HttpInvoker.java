@@ -51,7 +51,7 @@ public class HttpInvoker implements Invoker
         }
         catch (Exception e)
         {
-            throw new RpcException("http µ÷ÓÃÒì³£",e, RpcExceptionCodeEnum.INVOKE_REQUEST_ERROR.getCode(),request);
+            throw new RpcException("http è°ƒç”¨å¼‚å¸¸",e, RpcExceptionCodeEnum.INVOKE_REQUEST_ERROR.getCode(),request);
         }
 
     }
@@ -68,14 +68,14 @@ public class HttpInvoker implements Invoker
 
     public static HttpClient getHttpClient() {
         PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
-        //Á¬½Ó³Ø×î´óÉú³ÉÁ¬½ÓÊı200
+        //è¿æ¥æ± æœ€å¤§ç”Ÿæˆè¿æ¥æ•°200
         cm.setMaxTotal(200);
-        // Ä¬ÈÏÉèÖÃroute×î´óÁ¬½ÓÊıÎª20
+        // é»˜è®¤è®¾ç½®routeæœ€å¤§è¿æ¥æ•°ä¸º20
         cm.setDefaultMaxPerRoute(20);
-        // Ö¸¶¨×¨ÃÅµÄroute£¬ÉèÖÃ×î´óÁ¬½ÓÊıÎª80
+        // æŒ‡å®šä¸“é—¨çš„routeï¼Œè®¾ç½®æœ€å¤§è¿æ¥æ•°ä¸º80
         HttpHost localhost = new HttpHost("localhost", 8080);
         cm.setMaxPerRoute(new HttpRoute(localhost), 50);
-        // ´´½¨httpClient
+        // åˆ›å»ºhttpClient
          return HttpClients.custom()
                 .setConnectionManager(cm)
                  .build();
