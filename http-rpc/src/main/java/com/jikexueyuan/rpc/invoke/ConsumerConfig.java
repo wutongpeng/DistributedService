@@ -21,9 +21,9 @@ public class ConsumerConfig
     private ZookeeperClient client;
     private final ConcurrentHashMap<Class,AtomicInteger> invokeCount = new ConcurrentHashMap<Class, AtomicInteger>();
 
-    
-    public String getUrl(Class clazz) {
-    	if (client != null)
+
+    public String getUrl(Class clazz) throws RpcException {
+        if (client != null)
         {
             List<String> urlList = new ArrayList<String>();
             List<String> pathList = client.getChildren("/rpc/"+clazz.getName().replaceAll("\\.","/"));
@@ -41,7 +41,7 @@ public class ConsumerConfig
         {
             return url;
         }
-    	
+
     }
 
     public String getCurrentUrl(Class clazz,List<String> urlList) throws RpcException {
@@ -56,12 +56,14 @@ public class ConsumerConfig
             return urlList.get(i%urlList.size());
         }
     }
-    
-    public void setUrl(String url) {
-    	this.url = url;
+
+    public void setUrl(String url)
+    {
+        this.url = url;
         if (url.toLowerCase().startsWith("zookeeper://"))
         {
             client = new ZookeeperClient(url.toLowerCase().replaceFirst("zookeeper://",""));
         }
     }
+
 }

@@ -57,7 +57,6 @@ public class HttpInvoker implements Invoker
         {
             throw new RpcException("http 调用异常",e, RpcExceptionCodeEnum.INVOKE_REQUEST_ERROR.getCode(),request);
         }
-
     }
 
     public void response(String response, OutputStream outputStream) throws RpcException
