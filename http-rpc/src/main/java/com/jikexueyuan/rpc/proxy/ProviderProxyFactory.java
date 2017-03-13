@@ -49,7 +49,7 @@ public class ProviderProxyFactory extends AbstractHandler
         }
         for (Map.Entry<Class,Object> entry: providers.entrySet())
         {
-            register(entry.getKey(), entry.getValue());
+            register(entry.getKey(), entry.getValue(),null);
         }
         factory = this;
     }
@@ -62,14 +62,17 @@ public class ProviderProxyFactory extends AbstractHandler
         }
         for (Map.Entry<Class,Object> entry: providers.entrySet())
         {
-            register(entry.getKey(), entry.getValue());
+            register(entry.getKey(), entry.getValue(),providerConfig);
         }
         factory = this;
     }
 
-    public void register(Class clazz,Object object)
+    public void register(Class clazz,Object object,ProviderConfig config)
     {
         providers.put(clazz,object);
+        if (config != null){
+            config.register(clazz);
+        }
         logger.info("{} 已经发布", clazz.getSimpleName());
     }
 
