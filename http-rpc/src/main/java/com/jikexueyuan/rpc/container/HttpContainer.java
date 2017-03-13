@@ -45,7 +45,7 @@ public class HttpContainer extends Container
         }
         catch (Throwable e)
         {
-            logger.error("ÈÝÆ÷Òì³£", e);
+            logger.error("å®¹å™¨å¼‚å¸¸", e);
         }
     }
 
